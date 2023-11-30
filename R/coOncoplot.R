@@ -4,6 +4,9 @@
 #' @param m1 first \code{\link{MAF}} object
 #' @param m2 second \code{\link{MAF}} object
 #' @param genes draw these genes. Default plots top 5 mutated genes from two cohorts.
+#' @param topN NULL(default) or a integer vector of length 1 or 2. if NULL, plot top 5 mutated genes
+#'   from two cohorts. if length 1 integer, take plot topN mutated genes from two cohorts. if length
+#'   2 interge, plot topN[1] from m1, and topN[2] frm m2 mutated genes.
 #' @param clinicalFeatures1 columns names from `clinical.data` slot of m1 \code{MAF} to be drawn in
 #'   the plot. Dafault NULL.
 #' @param clinicalFeatures2 columns names from `clinical.data` slot of m2 \code{MAF} to be drawn in
@@ -76,7 +79,7 @@
 #' @return Invisibly returns a list of sample names in their order of occurrences in M1 and M2
 #'   respectively.
 #'
-coOncoplot = function(m1, m2, genes = NULL, m1Name = NULL, m2Name = NULL,
+coOncoplot = function(m1, m2, genes = NULL, topN = NULL, m1Name = NULL, m2Name = NULL,
                        clinicalFeatures1 = NULL, clinicalFeatures2 = NULL,
                        annotationColor1 = NULL, annotationColor2 = NULL, annotationFontSize = 1.2, sortByM1 = FALSE, sortByM2 = FALSE,
                        sortByAnnotation1 = FALSE, annotationOrder1 = NULL, sortByAnnotation2 = FALSE, annotationOrder2 = NULL,
@@ -88,9 +91,21 @@ coOncoplot = function(m1, m2, genes = NULL, m1Name = NULL, m2Name = NULL,
                        geneNamefont = 0.8, showSampleNames = FALSE, SampleNamefont = 0.5, barcode_mar = 1, outer_mar = 3, gene_mar = 1,
                        legendFontSize = 1.2, titleFontSize = 1.5, keepGeneOrder=FALSE,
                        bgCol = "#CCCCCC", borderCol = "white"){
-
   if(is.null(genes)){
-    genes = unique(c(getGeneSummary(m1)[1:5, Hugo_Symbol], getGeneSummary(m2)[1:5, Hugo_Symbol]))
+    if (is.null(topN)){
+      topN = 5L
+    }else{
+      topN = as.integer(topN)
+    }
+    if (length(topN)==1){
+      genes = unique(c(getGeneSummary(m1)[1:topN, Hugo_Symbol], getGeneSummary(m2)[1:topN, Hugo_Symbol]))
+      message('There are [',topN * 2 - length(genes),'] overlapping genes in top ',topN,' genes from m1 group, and top ',topN,' genes from m2 group')
+    }else if(length(topN)==2){
+      genes = unique(c(getGeneSummary(m1)[1:topN[1], Hugo_Symbol], getGeneSummary(m2)[1:topN[2], Hugo_Symbol]))
+      message('There are [',sum(topN) - length(genes),'] overlapping genes in top ', topN[1],' genes in m1 group and top ',topN[2],' genes in m2 group')
+    }else{
+      stop('! wrong format of topN, should be NULL or interger c(N) or c(N1,N2)')
+    }
   }
 
   m1.genes = getGeneSummary(x = m1)[Hugo_Symbol %in% genes]

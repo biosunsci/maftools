@@ -8,6 +8,7 @@ coOncoplot(
   m1,
   m2,
   genes = NULL,
+  topN = NULL,
   m1Name = NULL,
   m2Name = NULL,
   clinicalFeatures1 = NULL,
@@ -59,6 +60,10 @@ coOncoplot(
 \item{m2}{second \code{\link{MAF}} object}
 
 \item{genes}{draw these genes. Default plots top 5 mutated genes from two cohorts.}
+
+\item{topN}{NULL(default) or a integer vector of length 1 or 2. if NULL, plot top 5 mutated genes
+from two cohorts. if length 1 integer, take plot topN mutated genes from two cohorts. if length
+2 interge, plot topN[1] from m1, and topN[2] frm m2 mutated genes.}
 
 \item{m1Name}{optional name for first cohort}
 
