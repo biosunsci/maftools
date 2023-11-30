@@ -45,6 +45,7 @@ oncoplot(
   gene_mar = 5,
   anno_height = 1,
   legend_height = 4,
+  lengend_txt_replace = NULL,
   sortByAnnotation = FALSE,
   groupAnnotationBySize = TRUE,
   annotationOrder = NULL,
@@ -86,17 +87,20 @@ oncoplot(
 
 \item{top}{how many top genes to be drawn. defaults to 20.}
 
-\item{minMut}{draw all genes with `min` number of mutations. Can be an integer or fraction (of samples mutated), Default NULL}
+\item{minMut}{draw all genes with `min` number of mutations. Can be an integer or fraction (of
+samples mutated), Default NULL}
 
 \item{genes}{Just draw oncoplot for these genes. Default NULL.}
 
-\item{altered}{Default FALSE. Chooses top genes based on muatation status. If \code{TRUE} chooses top genes based alterations (CNV or mutation).}
+\item{altered}{Default FALSE. Chooses top genes based on muatation status. If \code{TRUE} chooses
+top genes based alterations (CNV or mutation).}
 
 \item{drawRowBar}{logical. Plots righ barplot for each gene. Default \code{TRUE}.}
 
 \item{drawColBar}{logical plots top barplot for each sample. Default \code{TRUE}.}
 
-\item{leftBarData}{Data for leftside barplot. Must be a data.frame with two columns containing gene names and values. Default `NULL`}
+\item{leftBarData}{Data for leftside barplot. Must be a data.frame with two columns containing
+gene names and values. Default `NULL`}
 
 \item{leftBarLims}{limits for `leftBarData`. Default `NULL`.}
 
@@ -104,7 +108,9 @@ oncoplot(
 
 \item{leftBarVlineCol}{Line color for `leftBarVline` Default gray70}
 
-\item{rightBarData}{Data for rightside barplot. Must be a data.frame with two columns containing to gene names and values. Default `NULL` which draws distribution by variant classification. This option is applicable when only `drawRowBar` is TRUE.}
+\item{rightBarData}{Data for rightside barplot. Must be a data.frame with two columns containing
+to gene names and values. Default `NULL` which draws distribution by variant classification.
+This option is applicable when only `drawRowBar` is TRUE.}
 
 \item{rightBarLims}{limits for `rightBarData`. Default `NULL`.}
 
@@ -112,7 +118,10 @@ oncoplot(
 
 \item{rightBarVlineCol}{Line color for `rightBarVline` Default gray70}
 
-\item{topBarData}{Default `NULL` which draws absolute number of mutation load for each sample. Can be overridden by choosing one clinical indicator(Numeric) or by providing a two column data.frame containing sample names and values for each sample. This option is applicable when only `drawColBar` is TRUE.}
+\item{topBarData}{Default `NULL` which draws absolute number of mutation load for each sample. Can
+be overridden by choosing one clinical indicator(Numeric) or by providing a two column
+data.frame containing sample names and values for each sample. This option is applicable when
+only `drawColBar` is TRUE.}
 
 \item{topBarLims}{limits for `topBarData`. Default `NULL`.}
 
@@ -124,20 +133,27 @@ oncoplot(
 
 \item{includeColBarCN}{Whether to include CN in column bar plot. Default TRUE}
 
-\item{clinicalFeatures}{columns names from `clinical.data` slot of \code{MAF} to be drawn in the plot. Default NULL.}
+\item{clinicalFeatures}{columns names from `clinical.data` slot of \code{MAF} to be drawn in the
+plot. Default NULL.}
 
-\item{annotationColor}{Custom colors to use for `clinicalFeatures`. Must be a named list containing a named vector of colors. Default NULL. See example for more info.}
+\item{annotationColor}{Custom colors to use for `clinicalFeatures`. Must be a named list
+containing a named vector of colors. Default NULL. See example for more info.}
 
-\item{annotationDat}{If MAF file was read without clinical data, provide a custom \code{data.frame} with a column \code{Tumor_Sample_Barcode} containing sample names along with rest of columns with annotations.
-You can specify which columns to be drawn using `clinicalFeatures` argument.}
+\item{annotationDat}{If MAF file was read without clinical data, provide a custom
+\code{data.frame} with a column \code{Tumor_Sample_Barcode} containing sample names along with
+rest of columns with annotations. You can specify which columns to be drawn using
+`clinicalFeatures` argument.}
 
-\item{pathways}{Default `NULL`. Can be `sigpw`, `smgbp`, or a two column data.frame/tsv-file with genes and corresponding pathway mappings.`}
+\item{pathways}{Default `NULL`. Can be `sigpw`, `smgbp`, or a two column data.frame/tsv-file with
+genes and corresponding pathway mappings.`}
 
-\item{topPathways}{Top most altered pathways to draw. Default 3. Mutually exclusive with `selectedPathways`}
+\item{topPathways}{Top most altered pathways to draw. Default 3. Mutually exclusive with
+`selectedPathways`}
 
 \item{path_order}{Default `NULL` Manually specify the order of pathways}
 
-\item{selectedPathways}{Manually provide the subset of pathway names to be selected from `pathways`. Default NULL. In case `pathways` is `auto` draws top 3 altered pathways.}
+\item{selectedPathways}{Manually provide the subset of pathway names to be selected from
+`pathways`. Default NULL. In case `pathways` is `auto` draws top 3 altered pathways.}
 
 \item{collapsePathway}{Shows only rows corresponding to the pathways. Default FALSE.}
 
@@ -147,11 +163,14 @@ You can specify which columns to be drawn using `clinicalFeatures` argument.}
 
 \item{draw_titv}{logical Includes TiTv plot. \code{FALSE}}
 
-\item{titv_col}{named vector of colors for each transition and transversion classes. Should be of length six with the names "C>T" "C>G" "C>A" "T>A" "T>C" "T>G".  Default NULL.}
+\item{titv_col}{named vector of colors for each transition and transversion classes. Should be of
+length six with the names "C>T" "C>G" "C>A" "T>A" "T>C" "T>G".  Default NULL.}
 
 \item{showTumorSampleBarcodes}{logical to include sample names.}
 
-\item{tsbToPIDs}{Custom names for Tumor_Sample_Barcodes. Can be a column name in clinicaldata or a 2 column data.frame of Tumor_Sample_Barcodes to patient ID mappings. Applicable only when `showTumorSampleBarcodes = TRUE`. Default NULL.}
+\item{tsbToPIDs}{Custom names for Tumor_Sample_Barcodes. Can be a column name in clinicaldata or a
+2 column data.frame of Tumor_Sample_Barcodes to patient ID mappings. Applicable only when
+`showTumorSampleBarcodes = TRUE`. Default NULL.}
 
 \item{barcode_mar}{Margin width for sample names. Default 4}
 
@@ -163,21 +182,35 @@ You can specify which columns to be drawn using `clinicalFeatures` argument.}
 
 \item{legend_height}{Height of plotting area for legend. Default 4}
 
-\item{sortByAnnotation}{logical sort oncomatrix (samples) by provided `clinicalFeatures`. Sorts based on first `clinicalFeatures`.  Defaults to FALSE. column-sort}
+\item{lengend_txt_replace}{Named vector like c(Frame_Shift_Ins='Amplification',
+In_Frame_Ins='Gain', In_Frame_Del='Loss', Frame_Shift_Del='Deletion'). replace standard item
+like "Frame_Shift_Ins" to custom label like 'Amplification' in figure legend. Do not affect data
+presentation. Can be used to display CNA (copy number alteration) data of genes instead of
+mutations of genes (SNV) of oncoplot, for both plots differ at figure legends only, CNA prefers
+"Loss", "Deletion", "Gain", etc in legend, while SNV prefers "Frame_Shift_Ins",
+"Frame_Shift_Del", etc in legend.}
 
-\item{groupAnnotationBySize}{Further group `sortByAnnotation` orders by their size.  Defaults to TRUE. Largest groups comes first.}
+\item{sortByAnnotation}{logical sort oncomatrix (samples) by provided `clinicalFeatures`. Sorts
+based on first `clinicalFeatures`.  Defaults to FALSE. column-sort}
 
-\item{annotationOrder}{Manually specify order for annotations. Works only for first `clinicalFeatures`. Default NULL.}
+\item{groupAnnotationBySize}{Further group `sortByAnnotation` orders by their size.  Defaults to
+TRUE. Largest groups comes first.}
 
-\item{sortByMutation}{Force sort matrix according mutations. Helpful in case of MAF was read along with copy number data. Default FALSE.}
+\item{annotationOrder}{Manually specify order for annotations. Works only for first
+`clinicalFeatures`. Default NULL.}
 
-\item{keepGeneOrder}{logical whether to keep order of given genes. Default FALSE, order according to mutation frequency}
+\item{sortByMutation}{Force sort matrix according mutations. Helpful in case of MAF was read along
+with copy number data. Default FALSE.}
+
+\item{keepGeneOrder}{logical whether to keep order of given genes. Default FALSE, order according
+to mutation frequency}
 
 \item{GeneOrderSort}{logical this is applicable when `keepGeneOrder` is TRUE. Default TRUE}
 
 \item{sampleOrder}{Manually speify sample names for oncolplot ordering. Default NULL.}
 
-\item{additionalFeature}{a vector of length two indicating column name in the MAF and the factor level to be highlighted. Provide a list of values for highlighting more than one features}
+\item{additionalFeature}{a vector of length two indicating column name in the MAF and the factor
+level to be highlighted. Provide a list of values for highlighting more than one features}
 
 \item{additionalFeaturePch}{Default 20}
 
@@ -187,15 +220,19 @@ You can specify which columns to be drawn using `clinicalFeatures` argument.}
 
 \item{genesToIgnore}{do not show these genes in Oncoplot. Default NULL.}
 
-\item{removeNonMutated}{Logical. If \code{TRUE} removes samples with no mutations in the oncoplot for better visualization. Default \code{FALSE}.}
+\item{removeNonMutated}{Logical. If \code{TRUE} removes samples with no mutations in the oncoplot
+for better visualization. Default \code{FALSE}.}
 
-\item{fill}{Logical. If \code{TRUE} draws genes and samples as blank grids even when they are not altered.}
+\item{fill}{Logical. If \code{TRUE} draws genes and samples as blank grids even when they are not
+altered.}
 
-\item{cohortSize}{Number of sequenced samples in the cohort. Default all samples from Cohort. You can manually specify the cohort size. Default \code{NULL}}
+\item{cohortSize}{Number of sequenced samples in the cohort. Default all samples from Cohort. You
+can manually specify the cohort size. Default \code{NULL}}
 
 \item{colors}{named vector of colors for each Variant_Classification.}
 
-\item{cBioPortal}{Adds annotations similar to cBioPortals MutationMapper and collapse Variants into Truncating and rest.}
+\item{cBioPortal}{Adds annotations similar to cBioPortals MutationMapper and collapse Variants
+into Truncating and rest.}
 
 \item{bgCol}{Background grid color for wild-type (not-mutated) samples. Default gray - "#CCCCCC"}
 
@@ -203,7 +240,8 @@ You can specify which columns to be drawn using `clinicalFeatures` argument.}
 
 \item{annoBorderCol}{border grid color for annotations. Default NA.}
 
-\item{numericAnnoCol}{color palette used for numeric annotations. Default 'YlOrBr' from RColorBrewer}
+\item{numericAnnoCol}{color palette used for numeric annotations. Default 'YlOrBr' from
+RColorBrewer}
 
 \item{drawBox}{logical whether to draw a box around main matrix. Default FALSE}
 
@@ -238,10 +276,14 @@ None.
 takes output generated by read.maf and draws an oncoplot
 }
 \details{
-Takes an \code{\link{MAF}} object as an input and plots it as a matrix. Any desired clincal features can be added at the bottom of the oncoplot by providing \code{clinicalFeatures}.
-Oncoplot can be sorted either by mutations or by clinicalFeatures using arguments \code{sortByMutation} and \code{sortByAnnotation} respectively.
+Takes an \code{\link{MAF}} object as an input and plots it as a matrix. Any desired
+ clincal features can be added at the bottom of the oncoplot by providing
+ \code{clinicalFeatures}. Oncoplot can be sorted either by mutations or by clinicalFeatures using
+ arguments \code{sortByMutation} and \code{sortByAnnotation} respectively.
 
-By setting `pathways` argument either `sigpw` or `smgbp` - cohort can be summarized by altered pathways. pathways argument also accepts a custom pathway list in the form of a two column tsv file or a data.frame containing gene names and their corresponding pathway.
+ By setting `pathways` argument either `sigpw` or `smgbp` - cohort can be summarized by altered
+ pathways. pathways argument also accepts a custom pathway list in the form of a two column tsv
+ file or a data.frame containing gene names and their corresponding pathway.
 }
 \examples{
 laml.maf <- system.file("extdata", "tcga_laml.maf.gz", package = "maftools")
@@ -260,8 +302,10 @@ fabcolors = list(FAB_classification = fabcolors)
 oncoplot(maf = laml, colors = col, clinicalFeatures = 'FAB_classification', sortByAnnotation = TRUE, annotationColor = fabcolors)
 }
 \references{
-Bailey, Matthew H et al. “Comprehensive Characterization of Cancer Driver Genes and Mutations.” Cell vol. 173,2 (2018): 371-385.e18. doi:10.1016/j.cell.2018.02.060
-Sanchez-Vega, Francisco et al. “Oncogenic Signaling Pathways in The Cancer Genome Atlas.” Cell vol. 173,2 (2018): 321-337.e10. doi:10.1016/j.cell.2018.03.035
+Bailey, Matthew H et al. “Comprehensive Characterization of Cancer Driver Genes and
+ Mutations.” Cell vol. 173,2 (2018): 371-385.e18. doi:10.1016/j.cell.2018.02.060 Sanchez-Vega,
+ Francisco et al. “Oncogenic Signaling Pathways in The Cancer Genome Atlas.” Cell vol. 173,2
+ (2018): 321-337.e10. doi:10.1016/j.cell.2018.03.035
 }
 \seealso{
 \code{\link{pathways}}

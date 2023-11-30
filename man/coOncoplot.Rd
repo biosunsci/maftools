@@ -39,6 +39,7 @@ coOncoplot(
   removeNonMutated = TRUE,
   anno_height = 2,
   legend_height = 4,
+  lengend_txt_replace = NULL,
   geneNamefont = 0.8,
   showSampleNames = FALSE,
   SampleNamefont = 0.5,
@@ -63,9 +64,11 @@ coOncoplot(
 
 \item{m2Name}{optional name for second cohort}
 
-\item{clinicalFeatures1}{columns names from `clinical.data` slot of m1 \code{MAF} to be drawn in the plot. Dafault NULL.}
+\item{clinicalFeatures1}{columns names from `clinical.data` slot of m1 \code{MAF} to be drawn in
+the plot. Dafault NULL.}
 
-\item{clinicalFeatures2}{columns names from `clinical.data` slot of m2 \code{MAF} to be drawn in the plot. Dafault NULL.}
+\item{clinicalFeatures2}{columns names from `clinical.data` slot of m2 \code{MAF} to be drawn in
+the plot. Dafault NULL.}
 
 \item{annotationColor1}{list of colors to use for `clinicalFeatures1` Default NULL.}
 
@@ -77,19 +80,23 @@ coOncoplot(
 
 \item{sortByM2}{sort by mutation frequency in `m2`}
 
-\item{sortByAnnotation1}{logical sort oncomatrix (samples) by provided `clinicalFeatures1`. Sorts based on first `clinicalFeatures1`.  Defaults to FALSE. column-sort}
+\item{sortByAnnotation1}{logical sort oncomatrix (samples) by provided `clinicalFeatures1`. Sorts
+based on first `clinicalFeatures1`.  Defaults to FALSE. column-sort}
 
-\item{annotationOrder1}{Manually specify order for annotations for `clinicalFeatures1`. Works only for first value. Default NULL.}
+\item{annotationOrder1}{Manually specify order for annotations for `clinicalFeatures1`. Works
+only for first value. Default NULL.}
 
 \item{sortByAnnotation2}{same as above but for m2}
 
-\item{annotationOrder2}{Manually specify order for annotations for `clinicalFeatures2`. Works only for first value. Default NULL.}
+\item{annotationOrder2}{Manually specify order for annotations for `clinicalFeatures2`. Works
+only for first value. Default NULL.}
 
 \item{sampleOrder1}{Manually specify sample names in m1 for oncolplot ordering. Default NULL.}
 
 \item{sampleOrder2}{Manually specify sample names in m2 for oncolplot ordering. Default NULL.}
 
-\item{additionalFeature1}{a vector of length two indicating column name in the MAF and the factor level to be highlighted.}
+\item{additionalFeature1}{a vector of length two indicating column name in the MAF and the factor
+level to be highlighted.}
 
 \item{additionalFeaturePch1}{Default 20}
 
@@ -97,7 +104,8 @@ coOncoplot(
 
 \item{additionalFeatureCex1}{Default 0.9}
 
-\item{additionalFeature2}{a vector of length two indicating column name in the MAF and the factor level to be highlighted.}
+\item{additionalFeature2}{a vector of length two indicating column name in the MAF and the factor
+level to be highlighted.}
 
 \item{additionalFeaturePch2}{Default 20}
 
@@ -115,11 +123,20 @@ coOncoplot(
 
 \item{colors}{named vector of colors for each Variant_Classification.}
 
-\item{removeNonMutated}{Logical. If \code{TRUE} removes samples with no mutations in the oncoplot for better visualization. Default \code{TRUE}.}
+\item{removeNonMutated}{Logical. If \code{TRUE} removes samples with no mutations in the oncoplot
+for better visualization. Default \code{TRUE}.}
 
 \item{anno_height}{Height of clinical margin. Default 2}
 
 \item{legend_height}{Height of legend margin. Default 4}
+
+\item{lengend_txt_replace}{the same as `lengend_txt_replace` in oncoplot. Named vector like
+c(Frame_Shift_Ins='Amplification', In_Frame_Ins='Gain', In_Frame_Del='Loss',
+Frame_Shift_Del='Deletion'). replace standard item like "Frame_Shift_Ins" to custom label like
+'Amplification' in figure legend. Do not affect data presentation. Can be used to display CNA
+(copy number alteration) data of genes instead of mutations of genes (SNV) of oncoplot, for
+both plots differ at figure legends only, CNA prefers "Loss", "Deletion", "Gain", etc in
+legend, while SNV prefers "Frame_Shift_Ins", "Frame_Shift_Del", etc in legend.}
 
 \item{geneNamefont}{font size for gene names. Default 1}
 
@@ -137,14 +154,16 @@ coOncoplot(
 
 \item{titleFontSize}{font size for title. Default 1.5}
 
-\item{keepGeneOrder}{force the resulting plot to use the order of the genes as specified. Default FALSE}
+\item{keepGeneOrder}{force the resulting plot to use the order of the genes as specified. Default
+FALSE}
 
 \item{bgCol}{Background grid color for wild-type (not-mutated) samples. Default gray - "#CCCCCC"}
 
 \item{borderCol}{border grid color for wild-type (not-mutated) samples. Default 'white'}
 }
 \value{
-Invisibly returns a list of sample names in their order of occurrences in M1 and M2 respectively.
+Invisibly returns a list of sample names in their order of occurrences in M1 and M2
+  respectively.
 }
 \description{
 Draw two oncoplots side by side for cohort comparision.
